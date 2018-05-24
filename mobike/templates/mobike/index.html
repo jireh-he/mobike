@@ -24,6 +24,7 @@ app.title = '厦门公交路线 - 线特效';
 
 $.get('{% url "reqmobike" %}', function(data) {
     data=data['mobikelines'];
+    console.log(data.length);
     var hStep = 300 / (data.length - 1);
     var mobikeLines = [].concat.apply([], data.map(function(mobikeLine, idx) {
         return {
@@ -39,7 +40,7 @@ $.get('{% url "reqmobike" %}', function(data) {
     myChart.setOption(option = {
         bmap: {
             center: [118.121133,24.484358],
-            zoom: 14,
+            zoom: 12,
             roam: true,
             mapStyle: {
               'styleJson': [

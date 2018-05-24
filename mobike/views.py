@@ -12,15 +12,16 @@ def mobindex(request):
 def index(request):
     return render(request,'mobike/index.html')
 
+def test(request):
+    return render(request,'mobike/indextest.html')
+
 def reqpath(request):
     try:
         startTime=request.GET['startTime']
-        endTime=request.GET['endTime']
     except:
         startTime=r'2017-10-01 07:00:00.0'
-        endTime=r'2017-10-01 07:30:00.0'
     gtools=GPSUtil()
-    mobikelines=Mobikedata.objects.filter(starttime__range=(startTime,endTime))
+    mobikelines=Mobikedata.objects.filter(starttime__startswith=startTime[0:13])[0:1000]
     mb=[]
     for m in mobikelines:
         pathpoints=[x.split(',') for s in m.pathstr[1:].split('#') for x in s.split(';')[:-1]]

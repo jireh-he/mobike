@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       {% load static %}
+       <script type="text/javascript" src='{% static "mobike/js/jquery.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/bootstrap.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/echarts.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/echartsgl.min.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/ecStat.min.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/dataTool.min.js" %}'></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DB27d6d86d6be854457ba00230cb1637"></script>
+       <script type="text/javascript" src='{% static "mobike/js/bmap.min.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/simplex.js" %}'></script>
+       <script type="text/javascript" src='{% static "mobike/js/common.js" %}'></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+app.title = '厦门摩拜单车路线 - 线特效';
+myChart.setOption(option ={
+    baseOption:{
+            title:{
+              text:'厦门摩拜单车2017年10月1日分时特效',
+            },
+            timeline:{
+            // y: 0,
+            axisType: 'category',
+            // realtime: false,
+            // loop: false,
+            autoPlay: false,
+            // currentIndex: 2,
+            playInterval: 60000,
+            // controlStyle: {
+            //     position: 'left'
+            // },
+            data: hours,
+        },
+        },
+        options:[],
+});
+var param={
+    url:'{% url "reqmobike" %}',
+    data:{
+        startTime:'2017-10-01 07',
+    },
+    currentIndex:0,
+};
+setOptionByHour(param);
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+myChart.on('timelinechanged',function (param) {
+    var p={
+    url:'{% url "reqmobike" %}',
+    data:{
+        startTime:'2017-10-01 '+hours[param.currentIndex],
+    },
+        currentIndex:param.currentIndex,
+    };
+    setOptionByHour(p);
+
+});
+
+
+       </script>
+   </body>
+</html>

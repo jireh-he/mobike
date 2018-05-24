@@ -20,5 +20,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^mobike/',mobviews.mobindex),
     url(r'^reqmobike',mobviews.reqpath,name='reqmobike'),
+    url(r'^test',mobviews.test,name='test'),
     url(r'^$',mobviews.index,name='index')
 ]
